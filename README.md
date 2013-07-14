@@ -26,7 +26,26 @@ target='_blank'>RIS Citation</a>
 The Liquid tag can obviously be wrapped in whatever DIV or formatting you like, given your layout.  I find that Twitter
 Bootstrap has some excellent formatting options and miniature icons.  
 
-### Greycite Notes ###
+### Greycite Performance ###
+
+Greycite does not need to have your URI's in its database before it will respond to requests for bibliographic information.  The first time a URI is 
+requested by the plug-in, Greycite will pull the URL contents, parse it for 
+metadata and assuming it finds good data (see next section), add it to the 
+database and return bibliographic entries.  
+
+This process is not terribly fast, and can take single-digit seconds which 
+are noticeable after you click the link.  
+
+This is avoidable by pre-adding all of the URI's on your Jekyll site to Greycite, which is done simply by looping over a list of URI's (perhaps 
+from a web crawl of your site), and querying Greycite for them.  
+
+The Ruby script **greycite-walk**, is designed to do exactly that, and is callable from a Rakefile or other build script so that you can include it as 
+a step in the build process for your site -- perhaps right after pushing fresh content to Github Pages, for example, you would crawl the new content and query Greycite to prime its cache.  
+
+Bibliographic information is returned nearly instantly once the URI's are cached by Greycite's database.  
+
+
+### Greycite Metadata Notes ###
 
 In order for Greycite to usefully index your content, you should include metadata in the HEAD portion of your default HTML
 template, so that Jekyll includes it in each completed HTML page.  Carl Boettiger has an excellent discussion of 
